@@ -1,4 +1,4 @@
-## Updated version of the ember-orbit-todos with Ember 1.13.5
+## Updated version of the [ember-orbit-todos](https://github.com/opsb/ember-orbit-todos) with Ember 1.13.5
 
 # New-orbit-todos
 
