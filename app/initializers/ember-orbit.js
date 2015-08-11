@@ -17,6 +17,7 @@ export function initialize(container, application) {
   application.register('store:main', LocalStorageStore);
   application.inject('controller', 'store', 'store:main');
   application.inject('route', 'store', 'store:main');
+  application.inject('component', 'store', 'store:main');
 }
 
 export default {

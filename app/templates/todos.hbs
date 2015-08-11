@@ -19,7 +19,7 @@
   {{#each model as |todo|}}
       <li {{bind-attr class="isDone"}}>
           <label>
-            {{input type="checkbox" checked=isDone}}
+            {{input type="checkbox" checked=todo.isDone}}
             {{todo.title}}
           </label>
       </li>

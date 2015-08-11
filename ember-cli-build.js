@@ -18,6 +18,27 @@ module.exports = function(defaults) {
   // modules that you would like to import into your application
   // please specify an object with the list of modules as keys
   // along with the exports of each module as its value.
+  app.import('bower_components/orbit.js/orbit.amd.js', {
+    exports: {'orbit': ['default']}
+  });
+  app.import('bower_components/orbit.js/orbit-common.amd.js', {
+    exports: {'orbit-common': ['default']}
+  });
 
+// Optional import of local storage source
+  app.import('bower_components/orbit.js/orbit-common-local-storage.amd.js', {
+    exports: {'orbit-common/local-storage-source': ['default']}
+  });
+
+// Optional import of JSON API source and serializer
+  app.import('bower_components/orbit.js/orbit-common-jsonapi.amd.js', {
+    exports: {'orbit-common/jsonapi-source': ['default'],
+      'orbit-common/jsonapi-serializer': ['default']}
+  });
+
+// Required Ember-Orbit import
+  app.import('bower_components/ember-orbit/ember-orbit.amd.js', {
+    exports: {'ember-orbit': ['default']}
+  });
   return app.toTree();
 };

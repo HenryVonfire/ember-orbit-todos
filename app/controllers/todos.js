@@ -1,47 +1,54 @@
 import Ember from 'ember';
 
 const {
+  set,
   get,
+  computed,
   Controller
   }= Ember;
 
 export default Controller.extend({
-  content: [],
-
-  /*remaining: function() {
-    return get(this,"model.length") - get(this,"completed");
-  }.property('@each.isDone', 'model.length'),
-
-  completed: function(){
-    const model = this.store.filter(function(model){
-      return model.isDone;
+  remaining: computed('model.@each.isDone', 'model.length',function() {
+    const model = get(this,'model');
+    const doneModel = model.filter(function(item){
+      return item.get('isDone');
     });
-    return model.length;
-    //return this.filterProperty('isDone', true).get('length');
-  }.property('@each.isDone'),
+    return model.get('length') - doneModel.get('length');
+  }),
 
-  isEmpty: function() {
-    return this.get('length') === 0;
-  }.property('length'),
+  isEmpty: computed('model.length',function() {
+    return get(this,'model.length') === 0;
+  }),
 
-  allAreDone: function(key, value) {
-    if (arguments.length === 2) {
-      this.setEach('isDone', value);
-
-      return value;
-    } else {
-      return !this.get('isEmpty') && this.everyProperty('isDone', true);
+  allAreDone: computed('model.@each.isDone',{
+    set(key,value){
+      const model = get(this,'model');
+      if (arguments.length === 2) {
+        model.forEach(function(item){
+          set(item,'isDone', true);
+        });
+        return value;
+      }
+    },
+    get(){
+      const model = get(this,'model');
+      return !get(this,'isEmpty') && model.isEvery('isDone', true);
     }
-  }.property('@each.isDone'),*/
+  }),
 
   actions: {
     createToDo: function(title) {
-      this.store.add('todo', { title: title });
+      this.store.add('todo', { title: title, isDone:false });
     },
 
     clearCompletedTodos: function() {
-      console.log(get(this,'model'));
-      //this.filterProperty('isDone', true).forEach(this.removeObject, this);
+      const model = get(this,'model');
+      const self = this;
+      model.forEach(function(item){
+        if(item.get('isDone')){
+          self.store.remove('todo',item);
+        }
+      });
     }
   }
 });
